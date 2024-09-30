@@ -8,7 +8,7 @@
         function rastgeleKelime() {
             // Rastgele bir ID üretelim (1 ile 100000 arasında)
             const id = Math.floor(Math.random() * 100000) + 1;
-            const url = `https://sozluk.gov.tr/gts_id?id=${id}`;
+            const url = `https://sozluk.gov.tr/gts?id=${id}`;
 
             // API'den kelime verisini çekelim
             fetch(url)
