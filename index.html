@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TDK Kelime Çekici</title>
+    <script>
+        function rastgeleKelime() {
+            // Rastgele bir ID üretelim (1 ile 100000 arasında)
+            const id = Math.floor(Math.random() * 100000) + 1;
+            const url = `https://sozluk.gov.tr/gts_id?id=${id}`;
+
+            // API'den kelime verisini çekelim
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data[0]) {
+                        const kelime = data[0].madde;  // Kelimenin kendisi
+                        const anlam = data[0].anlamlarListe[0].anlam;  // İlk anlamı
+                        
+                        document.getElementById('kelime').textContent = "Kelime: " + kelime;
+                        document.getElementById('anlam').textContent = "Anlam: " + anlam;
+                    } else {
+                        document.getElementById('kelime').textContent = "Kelime bulunamadı!";
+                        document.getElementById('anlam').textContent = "";
+                    }
+                })
+                .catch(error => {
+                    console.error('API hatası:', error);
+                    document.getElementById('kelime').textContent = "Bir hata oluştu!";
+                    document.getElementById('anlam').textContent = "";
+                });
+        }
+    </script>
+</head>
+<body>
+    <h1>TDK Rastgele Kelime Çekici</h1>
+    <p id="kelime">Kelime: </p>
+    <p id="anlam">Anlam: </p>
+    <button onclick="rastgeleKelime()">Yeni Kelime Getir</button>
+</body>
+</html>
